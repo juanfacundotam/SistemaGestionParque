@@ -1,6 +1,8 @@
 ﻿  Parque.cpp
-C:\Users\Facundo\Desktop\Proyecto TP Gestion\Ejercicio\rlutil.h(577,32): warning C4267: 'inicializando': conversión de 'size_t' a 'unsigned int'; posible pérdida de datos
-C:\Users\Facundo\Desktop\Proyecto TP Gestion\Ejercicio\Parque.cpp(31,58): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
-C:\Users\Facundo\Desktop\Proyecto TP Gestion\Ejercicio\Parque.cpp(84,57): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
-C:\Users\Facundo\Desktop\Proyecto TP Gestion\Ejercicio\Parque.cpp(127,9): warning C4101: 'opcion_ingreso': variable local sin referencia
-  Ejercicio.vcxproj -> C:\Users\Facundo\Desktop\Proyecto TP Gestion\x64\Debug\Ejercicio.exe
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\rlutil.h(577,32): warning C4267: 'inicializando': conversión de 'size_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(32,58): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(97,63): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(115,9): warning C4101: 'escribir': variable local sin referencia
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(170,57): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(213,9): warning C4101: 'opcion_ingreso': variable local sin referencia
+  Ejercicio.vcxproj -> C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\x64\Debug\Ejercicio.exe

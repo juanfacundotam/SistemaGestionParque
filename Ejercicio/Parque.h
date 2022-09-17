@@ -16,6 +16,8 @@ public:
     void mostrarActividades();
     bool agregarEmpleado();
     void mostrarEmpleados();
+    bool crearClaveMaestra();
+    bool validarClaveMaestra();
     bool InicioSesion();
     /*
     //Para mí estos tres van en la parte de ventas. Porque el cliente se registra cuando hace la compra. Si no el usuario tendria que estar yendo y viniendo de un menú al otro para concretar la venta de un pase.

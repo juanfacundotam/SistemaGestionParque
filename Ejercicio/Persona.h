@@ -12,6 +12,7 @@ private:
     int _dni;
 public:
     Persona();
+    Persona(bool admin);
     void cargarPersona();
     void mostrarPersona(int x);//falta
     void setNombre(string);

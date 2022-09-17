@@ -10,6 +10,8 @@ private:
     bool _estado;
 public:
     Empleado();
+    Empleado(bool admin);
+    
     void CargarEmpleado();
     void MostrarEmpleado(int x);
     void eliminarEmpleado();

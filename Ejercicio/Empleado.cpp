@@ -6,6 +6,16 @@ Empleado::Empleado() {
     *_password = ' ';
     _estado = false;
 }
+Empleado::Empleado(bool admin) {
+    Persona::setNombre("admin");
+    Persona::setApellido("admin");
+    Persona::setDni(0);
+    strcpy(_cargo, "admin");
+    *_password = ' ';
+    _estado = false;
+}
+
+
 
 ///
 void Empleado::CargarEmpleado() {

@@ -5,6 +5,14 @@ Persona::Persona() {
     strcpy(_nombre, "");
     strcpy(_apellido, "");
     _dni = 0;
+
+}
+
+Persona::Persona(bool admin)
+{
+    strcpy(_nombre, "admin");
+    strcpy(_apellido, "admin");
+    _dni = 0;
 }
 
 ///

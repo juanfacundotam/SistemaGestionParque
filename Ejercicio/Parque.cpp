@@ -3,6 +3,7 @@
 #include "rlutil.h"
 #include "funciones.h"
 using namespace std;
+
 Parque::Parque() {
     _cantidadActividades = 0;
     _cantidadEmpleados = 0;
@@ -68,6 +69,91 @@ void Parque::mostrarActividades() {
 }
 
 ///
+bool Parque::crearClaveMaestra() {
+    bool admin = true;
+    Empleado primerRegistro(admin);
+    int escribir;
+    string repetirPass;
+    FILE* p;
+    p = fopen("Empleados.dat", "ab");
+    if (p == NULL) {
+        cout << "No se pudo acceder al archivo..." << endl;
+        rlutil::anykey();
+        return false;
+    }
+    else {
+        do {
+            cout << "Ingrese una clave: ";
+            primerRegistro.setPassword(cinPassword().c_str());
+            //cin.getline(_password, 30);
+            cout << "Repita la clave: ";
+            repetirPass = cinPassword();
+            if (primerRegistro.getPassword() != repetirPass) {
+                cout << "Las claves no coinciden" << endl;
+            }
+        } while (primerRegistro.getPassword() != repetirPass);
+        cout << endl << endl;
+    }
+    escribir = fwrite(&primerRegistro, sizeof(Empleado), 1, p);
+    if (escribir == 0) {
+        fclose(p);
+        cout << "Error: La clave no fue registrada correctamente." << endl;
+        rlutil::anykey();
+        return false;
+    }
+
+    fclose(p);
+    cout << "CLAVE MAESTRA creada correctamente.";
+    rlutil::anykey();
+    return true;
+
+}
+
+bool Parque::validarClaveMaestra() {
+    Empleado registro;
+    string password;
+    int escribir, intentos = 2, cont = 0;
+    FILE* p;
+    p = fopen("Empleados.dat", "rb");
+    if (p == NULL) {
+        cout << "No se pudo acceder al archivo..." << endl;
+        rlutil::anykey();
+        return false;
+    }
+    while (fread(&registro, sizeof(Empleado), 1, p) == 1) {
+        if (registro.getDni() == 0) {
+            rlutil::locate(40, 15);
+            cout << "Solicitar permiso" << registro.getNombre() << "!" << endl;
+
+            do {
+                rlutil::locate(40, 17 + cont);
+                cout << "INGRESE LA CLAVE ADMIN: ";
+                //getline(cin, password);
+                password = cinPassword();
+                if (registro.getPassword() == password) {
+                    rlutil::locate(40, 25);
+                    cout << "Permiso habilitado" << endl;
+                    Sleep(1000);
+                }
+                else {
+                    rlutil::locate(40, 22);
+                    cout << "SU CLAVE ES INCORRECTA" << endl;
+                    cont++;
+                    rlutil::locate(40, 23);
+                    cout << "Le quedan " << --intentos << " intentos..." << endl;
+                    if (intentos == 0) {
+                        Sleep(1000);
+                        fclose(p);
+                        return false;
+                    }
+                }
+            } while (registro.getPassword() != password);
+        }
+    }
+    fclose(p);
+    return true;
+}
+
 bool Parque::agregarEmpleado() {
     Empleado registro;
     int escribir;
@@ -133,8 +219,10 @@ bool Parque::InicioSesion() {
     if (p == NULL) {
         rlutil::locate(30, 13);
         cout << "No se encuentran empleados registrados..." << endl;
-        rlutil::locate(20, 16);
-        cout << "Presione 1 para registrarte o cualquier otra tecla para salir" << endl;
+        rlutil::locate(26, 17);
+        cout << "Presione 1 para crear la clave administrador" << endl;
+        rlutil::locate(24, 20);
+        cout << "Presione cualquier otra tecla para salir del programa" << endl;
         //cin >> continuar;// Tengo que forzar un ingreso por teclado previo al método "agregarEmpleado()" porque está hecho para ejecutarse luego de un cin>>. Si no, me come la primera letra con el cin.ignore().
         int key = rlutil::getkey();
         if (key != 49) {
@@ -144,7 +232,7 @@ bool Parque::InicioSesion() {
         //fclose(p);//si no hay registros, cierro el file para abrirlo en modo escritura con el método "agregarEmpleado()"
         //rlutil::anykey();
         rlutil::cls();
-        cargo = agregarEmpleado();
+        cargo = crearClaveMaestra();
         if (cargo) {
             rlutil::cls();
             rlutil::locate(45, 15);
@@ -205,7 +293,7 @@ bool Parque::InicioSesion() {
                             Sleep(1000);
                             fclose(p);
                             return false;
-                        }
+                        } 
                     }
                 } while (registro.getPassword() != password);
             }
@@ -220,6 +308,11 @@ bool Parque::InicioSesion() {
     }
     else {
         fclose(p);
+        
+        if(!validarClaveMaestra()) {
+            return false;
+        }
+        rlutil::cls();
         cargo = agregarEmpleado();
         if (cargo) {
             rlutil::cls();
