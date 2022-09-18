@@ -27,7 +27,9 @@ string cinPassword()
 
     
     for (int i = 0; i < 30; i++) {
-        v = getch();
+        do {
+            v = getch();
+        } while (v == 8);
         if (v != 13) {
             clave[i] = v;
             cout << "*";

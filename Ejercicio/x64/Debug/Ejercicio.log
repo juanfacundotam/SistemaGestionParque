@@ -4,5 +4,5 @@ C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque
 C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(97,63): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
 C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(115,9): warning C4101: 'escribir': variable local sin referencia
 C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(170,57): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
-C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(213,9): warning C4101: 'opcion_ingreso': variable local sin referencia
+C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\Ejercicio\Parque.cpp(214,9): warning C4101: 'opcion_ingreso': variable local sin referencia
   Ejercicio.vcxproj -> C:\Users\Facundo\Desktop\TP Gestion GitHub\SistemaGestionParque\x64\Debug\Ejercicio.exe

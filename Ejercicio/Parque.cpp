@@ -123,7 +123,7 @@ bool Parque::validarClaveMaestra() {
     while (fread(&registro, sizeof(Empleado), 1, p) == 1) {
         if (registro.getDni() == 0) {
             rlutil::locate(40, 15);
-            cout << "Solicitar permiso" << registro.getNombre() << "!" << endl;
+            cout << "SOLICITAR PERMISO" << endl;
 
             do {
                 rlutil::locate(40, 17 + cont);
@@ -131,8 +131,8 @@ bool Parque::validarClaveMaestra() {
                 //getline(cin, password);
                 password = cinPassword();
                 if (registro.getPassword() == password) {
-                    rlutil::locate(40, 25);
-                    cout << "Permiso habilitado" << endl;
+                    rlutil::locate(45, 25);
+                    cout << "Permiso otorgado" << endl;
                     Sleep(1000);
                 }
                 else {
@@ -176,8 +176,9 @@ bool Parque::agregarEmpleado() {
     }
 
     fclose(p);
-    cout << "Empleado cargada correctamente.";
+    cout << "Empleado cargado correctamente.";
     rlutil::anykey();
+    rlutil::cls();
     return true;
 }
 
@@ -205,13 +206,13 @@ void Parque::mostrarEmpleados() {
     rlutil::anykey();
 }
 
-///
-bool Parque::InicioSesion() {
+/// 
+int Parque::InicioSesion() {   // le saque el bool  // return 0 sale del programa // return 1 vuelve al inicio de sesion // return 2 ingresa 
     Empleado registro;
     bool cargo, encontro = false;
     FILE* p;
     int opcion_ingreso;
-    int dni, cont = 0, intentos = 3;;
+    int dni, key2, cont = 0, intentos = 3;;
     string password;
     
 
@@ -226,7 +227,7 @@ bool Parque::InicioSesion() {
         //cin >> continuar;// Tengo que forzar un ingreso por teclado previo al método "agregarEmpleado()" porque está hecho para ejecutarse luego de un cin>>. Si no, me come la primera letra con el cin.ignore().
         int key = rlutil::getkey();
         if (key != 49) {
-            return false;
+            return 0;
         }
         
         //fclose(p);//si no hay registros, cierro el file para abrirlo en modo escritura con el método "agregarEmpleado()"
@@ -244,21 +245,19 @@ bool Parque::InicioSesion() {
             cout << "¡Ups! No pudimos cargar el registro." << endl;
         }
         rlutil::anykey();
-        return cargo;
+        rlutil::cls();
+        return 1;
 
     }
 
-    rlutil::locate(30, 13);
-    cout << "INGRESAR (presione 1) - REGISTRARSE (presione 2)";
-    //cin >> opcion_ingreso;
-    int key2 = rlutil::getkey();
-    while (key2 != 49 && key2 != 50) {
-        rlutil::cls();
+
+    do{ //validacion por si se toca otra tecla
         rlutil::locate(30, 13);
         cout << "INGRESAR (presione 1) - REGISTRARSE (presione 2)";
+        key2 = rlutil::getkey();
+        rlutil::cls();
         //cin >> opcion_ingreso;
-        int key2 = rlutil::getkey();
-    }
+    }while (key2 != 49 && key2 != 50);
 
     rlutil::cls();
     if (key2 == 49) {
@@ -268,6 +267,13 @@ bool Parque::InicioSesion() {
         cin.ignore();
 
         while (fread(&registro, sizeof(Empleado), 1, p) == 1) {
+            if (registro.getDni() == dni && dni == 0) { //en caso que ponga dni 0, que sería el del admin.
+                rlutil::locate(47, 17);
+                cout << "Acceso denegado" << endl;
+                Sleep(2000);
+                rlutil::cls();
+                return 1;
+            }
             if (registro.getDni() == dni) {
                 rlutil::locate(40, 15);
                 cout << "¡HOLA " << registro.getNombre() << "!" << endl;
@@ -280,7 +286,7 @@ bool Parque::InicioSesion() {
                     if (registro.getPassword() == password) {
                         rlutil::locate(40, 25);
                         cout << "SU CLAVE ES CORRECTA" << endl;
-                        Sleep(3000);
+                        Sleep(2000);
                         encontro = true;
                     }
                     else{
@@ -290,9 +296,9 @@ bool Parque::InicioSesion() {
                         rlutil::locate(40, 23);
                         cout << "Le quedan " << --intentos << " intentos..." << endl;
                         if (intentos == 0) {
-                            Sleep(1000);
+                            Sleep(1500);
                             fclose(p);
-                            return false;
+                            return 0;
                         } 
                     }
                 } while (registro.getPassword() != password);
@@ -303,14 +309,16 @@ bool Parque::InicioSesion() {
             rlutil::locate(30, 14);
             cout << "El DNI ingresado no corresponde a un usuario registrado." << endl;
             rlutil::anykey();
-            return encontro;
+            rlutil::cls();
+            fclose(p);
+            return 1;
         }
     }
     else {
-        fclose(p);
         
         if(!validarClaveMaestra()) {
-            return false;
+            fclose(p);
+            return 0;
         }
         rlutil::cls();
         cargo = agregarEmpleado();
@@ -318,19 +326,20 @@ bool Parque::InicioSesion() {
             rlutil::cls();
             rlutil::locate(45, 15);
             cout << "¡Bienvenid@!" << endl;
+            rlutil::cls();
         }
         else {
             rlutil::cls();
             rlutil::locate(45, 15);
             cout << "¡Ups! No pudimos cargar el registro." << endl;
+            return 0;
         }
-        rlutil::anykey();
-        return cargo;
+        return 1;
     }
 
     fclose(p);
-    rlutil::anykey();
-    return true;
+    rlutil::cls();
+    return 2;
 }
 
 ///

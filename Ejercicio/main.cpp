@@ -26,7 +26,7 @@ using namespace std;
 int main(void) {
     setlocale(LC_ALL, "Spanish");
 
-    int opcion;
+    int opcion, iniciar;
     Menu menuInicio;
     Parque parque;
 
@@ -36,17 +36,20 @@ int main(void) {
     char salir ='N';
     config_menu_inicio(menuInicio);
     
-    if (!parque.InicioSesion()) {
-        salir = 'S';
-    }
-    else {
-        rlutil::cls();
-        ovni();
-        rlutil::locate(75, 12);
-        std::cout << "Byeeeee!";
-        rlutil::locate(55, 27);
-        return 0;
-    }
+    do {
+        iniciar = parque.InicioSesion();
+        if (iniciar == 2) {
+            salir = 'N';
+        }
+        else if (iniciar == 0) {
+            rlutil::cls();
+            ovni();
+            rlutil::locate(75, 12);
+            std::cout << "Byeeeee!";
+            rlutil::locate(55, 27);
+            return 0;
+        }
+    } while (iniciar == 1);
 
     while (salir != 'S') {
         
